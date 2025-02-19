@@ -43,6 +43,13 @@ def create_book():
      db.session.add(book)
      db.session.commit()
      return jsonify({'id': book.id})
+@app.route('/api/v1/book/<id>', methods=['PUT'])
+def update_book(id):
+     book = Book.query.get_or_404(id)
+     book.name = request.json['name']
+     book.description = request.json['description']
+     db.session.commit()
+     return jsonify({'message': 'Book updated successfully!'})
 
 @app.route('/api/v1/book/<id>', methods=['DELETE'])
 def delete_book(id):
